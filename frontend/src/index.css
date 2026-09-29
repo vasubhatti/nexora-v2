@@ -1,9 +1,18 @@
 @import "tailwindcss";
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -14,39 +23,93 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
 }
 
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #27272a; border-radius: 999px; }
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 999px;
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
+
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
+
 @keyframes thinking {
-  0%, 100% { opacity: 0.3; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1); }
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-.fade-up { animation: fadeUp 0.3s ease both; }
-.fade-in { animation: fadeIn 0.2s ease both; }
-.spin { animation: spin 0.75s linear infinite; }
-.pulse-soft { animation: thinking 1.4s ease infinite; }
+.fade-up {
+  animation: fadeUp 0.3s ease both;
+}
 
-/* ================================
-   FEATURES GRID
-================================ */
+.fade-in {
+  animation: fadeIn 0.2s ease both;
+}
 
+.spin {
+  animation: spin 0.75s linear infinite;
+}
 
-
+.pulse-soft {
+  animation: thinking 1.4s ease infinite;
+}
 
 /* =========================================================
    NEXORA AI — PREMIUM FEATURES GRID
@@ -55,10 +118,7 @@ body {
 .feat-grid {
   width: 100%;
   display: grid;
-
-  /* FIX: always 3 equal columns on desktop */
   grid-template-columns: repeat(3, minmax(0, 1fr));
-
   gap: 16px;
   align-items: stretch;
 }
@@ -103,7 +163,9 @@ body {
     box-shadow 0.35s ease;
 }
 
-/* Subtle top glow */
+/* ---------------------------------------------------------
+   Subtle Top Glow
+   --------------------------------------------------------- */
 
 .feat-card-glow {
   position: absolute;
@@ -118,7 +180,9 @@ body {
   transition: opacity 0.35s ease;
 }
 
-/* Premium hover */
+/* ---------------------------------------------------------
+   Premium Hover
+   --------------------------------------------------------- */
 
 .feat-card:hover {
   transform: translateY(-5px);
@@ -241,7 +305,7 @@ body {
 }
 
 /* ---------------------------------------------------------
-   Bottom shine
+   Bottom Shine
    --------------------------------------------------------- */
 
 .feat-card-line {
@@ -271,10 +335,6 @@ body {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  /*
-    If a feature is marked wide, make it span 2 columns.
-    This keeps the grid mathematically aligned.
-  */
   .feat-card.feat-wide {
     grid-column: span 2;
   }
@@ -326,3 +386,120 @@ body {
     font-size: 16px;
   }
 }
+
+/* =========================================================
+   CHAT — MOBILE SIDEBAR MENU BUTTON
+   ========================================================= */
+
+/*
+   Hidden on desktop.
+   Visible on tablet/mobile.
+   The button belongs to Chat.jsx, NOT Sidebar.jsx.
+*/
+
+.chat-mobile-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #71717a;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.chat-mobile-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+@media (max-width: 1023px) {
+  .chat-mobile-btn {
+    display: flex;
+  }
+}
+/* =========================================================
+   TABLET + MOBILE
+   ========================================================= */
+
+@media (max-width: 1023px) {
+  .chat-mobile-btn {
+    display: flex;
+  }
+
+  .chat-mobile-btn.sidebar-open {
+    display: none !important;
+  }
+}
+
+/* =========================================================
+   SMALL TABLETS / PHONES
+   ========================================================= */
+
+@media (max-width: 760px) {
+  .chat-mobile-btn {
+    display: flex !important;
+
+    width: 34px;
+    height: 34px;
+
+    min-width: 34px;
+    min-height: 34px;
+
+    position: relative;
+    z-index: 100;
+  }
+
+  .chat-mobile-btn.sidebar-open {
+    display: none !important;
+  }
+}
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .chat-mobile-btn {
+    width: 34px;
+    height: 34px;
+
+    min-width: 34px;
+    min-height: 34px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 360px) {
+  .chat-mobile-btn {
+    width: 32px;
+    height: 32px;
+
+    min-width: 32px;
+    min-height: 32px;
+  }
+}
+/* Desktop sidebar */
+.sidebar-desktop {
+  display: none !important;
+}
+
+@media (min-width: 1024px) {
+  .sidebar-desktop {
+    display: block !important;
+  }
+}
+
+/* Mobile drawer */
+@media (min-width: 1024px) {
+  .sidebar-mobile {
+    display: none !important;
+  }
+} 

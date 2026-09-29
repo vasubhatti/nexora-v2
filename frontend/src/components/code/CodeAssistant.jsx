@@ -304,14 +304,28 @@ const CodeAssistant = ({ projectId, messages, files, onSend, onClear, onApplyCod
           <textarea
             ref={textareaRef}
             value={input}
-            onChange={e => setInput(e.target.value)}
+            onChange={e => {
+              setInput(e.target.value);
+
+              // Auto-expand textarea
+              e.target.style.height = "auto";
+              e.target.style.height = `${Math.min(e.target.scrollHeight, 100)}px`;
+            }}
             onKeyDown={onKey}
             placeholder="Ask about your code..."
             rows={1}
             style={{
-              flex: 1, background: "transparent", border: "none", outline: "none",
-              color: "#cccccc", fontSize: 13, resize: "none", lineHeight: 1.5,
-              fontFamily: "inherit", maxHeight: 100,
+              flex: 1,
+              background: "transparent",
+              border: "none",
+              outline: "none",
+              color: "#cccccc",
+              fontSize: 13,
+              resize: "none",
+              lineHeight: 1.5,
+              fontFamily: "inherit",
+              minHeight: 20,
+              maxHeight: 100,
               overflowY: "auto",
             }}
           />

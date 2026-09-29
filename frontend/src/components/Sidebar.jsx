@@ -357,49 +357,69 @@ const SidebarContent = ({ onCloseMobile }) => {
 
 const Sidebar = ({ mobileOpen, onCloseMobile }) => (
   <>
-    <button
-      onClick={onCloseMobile}
-      style={{
-        display: "none", position: "fixed", top: 14, left: 14, zIndex: 50,
-        padding: "8px", background: "#1a1a1a",
-        border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8,
-        color: "#71717a", cursor: "pointer",
-      }}
-      className="lg:!hidden"
-    >
-      <Menu size={16} />
-    </button>
-
+    {/* Mobile overlay */}
     {mobileOpen && (
       <div
         onClick={onCloseMobile}
         style={{
-          position: "fixed", inset: 0, zIndex: 40,
-          background: "rgba(0,0,0,0.75)", backdropFilter: "blur(4px)",
+          position: "fixed",
+          inset: 0,
+          zIndex: 9998,
+          background: "rgba(0, 0, 0, 0.75)",
+          backdropFilter: "blur(4px)",
         }}
-        className="lg:hidden"
       />
     )}
 
     {/* Mobile drawer */}
     <div
-      className="lg:hidden"
       style={{
-        position: "fixed", top: 0, left: 0, bottom: 0,
-        width: 280, zIndex: 50,
-        transform: mobileOpen ? "translateX(0)" : "translateX(-100%)",
-        transition: "transform 0.3s cubic-bezier(0.16,1,0.3,1)",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        bottom: 0,
+        width: 280,
+        zIndex: 9999,
+
+        background: "#0a0a0a",
+
+        transform: mobileOpen
+          ? "translateX(0)"
+          : "translateX(-100%)",
+
+        transition:
+          "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+
+        visibility: mobileOpen ? "visible" : "hidden",
+        pointerEvents: mobileOpen ? "auto" : "none",
+
+        boxShadow: mobileOpen
+          ? "10px 0 40px rgba(0,0,0,0.45)"
+          : "none",
       }}
     >
       <SidebarContent onCloseMobile={onCloseMobile} />
     </div>
 
-    {/* Desktop */}
+    {/* Desktop sidebar */}
     <div
-      className="hidden lg:block"
-      style={{ width: 260, flexShrink: 0 }}
+      style={{
+        display: "none",
+        width: 260,
+        flexShrink: 0,
+      }}
+      className="sidebar-desktop"
     >
-      <div style={{ position: "fixed", top: 0, left: 0, bottom: 0, width: 260, zIndex: 30 }}>
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          bottom: 0,
+          width: 260,
+          zIndex: 30,
+        }}
+      >
         <SidebarContent />
       </div>
     </div>

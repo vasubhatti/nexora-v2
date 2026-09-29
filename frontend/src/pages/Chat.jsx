@@ -230,7 +230,10 @@ const Chat = () => {
 
     {/* Sidebar — hide on mobile */}
     <div className="chat-sidebar" style={{ display: "flex" }}>
-      <Sidebar mobileOpen={mobileOpen} onCloseMobile={() => setMobileOpen(p => !p)} />
+      <Sidebar
+        mobileOpen={mobileOpen}
+        onCloseMobile={() => setMobileOpen(false)}
+      />
     </div>
 
     <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, overflow: "hidden" }}>
@@ -243,9 +246,9 @@ const Chat = () => {
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           {/* Mobile hamburger */}
           <button
-            onClick={() => setMobileOpen(p => !p)}
-            style={{ display: "none", background: "none", border: "none", cursor: "pointer", color: "#71717a", padding: 4 }}
-            className="chat-mobile-btn"
+            onClick={() => setMobileOpen(true)}
+            className={`chat-mobile-btn ${mobileOpen ? "sidebar-open" : ""}`}
+            aria-label="Open sidebar"
           >
             <span style={{ fontSize: 20 }}>☰</span>
           </button>
