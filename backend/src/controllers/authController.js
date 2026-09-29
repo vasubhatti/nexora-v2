@@ -68,12 +68,15 @@ export const login = async (req, res, next) => {
     // Send OTP email
     try {
       await sendOTPEmail(email, user.name, otp);
+      console.log(`✅ OTP sent to ${email}`);
     } catch (emailErr) {
-      console.error("Email send failed:", emailErr.message);
-      // Fallback: log OTP in development
-      if (process.env.NODE_ENV === "development") {
-        console.log(`\n🔐 DEV OTP for ${email}: ${otp}\n`);
+      console.error("❌ Email send failed:", emailErr.message);
+      // In production, return error so user knows to check config
+      if (process.env.NODE_ENV === "production") {
+        return next(new AppError("Failed to send verification email. Please contact support.", 500));
       }
+      // Dev fallback — print OTP to console
+      console.log(`\n🔐 DEV OTP for ${email}: ${otp}\n`);
     }
 
     res.json({
